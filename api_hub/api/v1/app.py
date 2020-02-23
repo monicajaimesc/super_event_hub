@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 
 host="0.0.0.0"
-port="5001"
+port="5003"
 
 
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
@@ -40,10 +40,6 @@ def not_found(err):
     """
     print(err)
     return send_json_error("error: Not found", 404)
-
-
-
-
 
 if __name__ == '__main__':
     app.run(host=host, port=port, threaded=True, use_reloader=False)
