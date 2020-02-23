@@ -6,6 +6,7 @@ from api.v1.views import app_views
 from flask import jsonify, make_response
 from flask import Flask
 from flask_cors import CORS
+from models.db_mysql import db
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
@@ -23,6 +24,11 @@ def send_json_error(err, code):
     msg = str(err).split(': ')[1]
     context = {'error': msg}
     return make_response(jsonify(**context), code)
+
+@app.teardown_appcontext
+def tear_down_db(cl):
+    """Close the storage"""
+    db.close()
 
 
 @app.errorhandler(400)
